@@ -1,24 +1,26 @@
 package com.example.firebasecrud.view.auth;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.firebasecrud.MainActivity;
 import com.example.firebasecrud.R;
 import com.example.firebasecrud.databinding.ActivityPhoneLoginBinding;
+import com.example.firebasecrud.model.user.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
@@ -28,7 +30,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class PhoneLoginActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -39,16 +50,23 @@ public class PhoneLoginActivity extends AppCompatActivity implements AdapterView
     static String[] countries = {"India", "USA", "China", "Japan", "Other"};
     private static final String TAG = "PhoneLoginActivityLog";
     private ProgressDialog progressDialog;
+    private FirebaseUser firebaseUser;
+    private FirebaseFirestore fireStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        fireStore = FirebaseFirestore.getInstance();
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_phone_login);
         binding.spinnerCountry.setOnItemSelectedListener(this);
         ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, countries);
         binding.spinnerCountry.setAdapter(aa);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("hello");
+
+
         binding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +90,6 @@ public class PhoneLoginActivity extends AppCompatActivity implements AdapterView
             }
         });
 
-        mAuth = FirebaseAuth.getInstance();
     }
 
     private void startPhoneNumberVerification(String phoneNumber) {
@@ -127,8 +144,29 @@ public class PhoneLoginActivity extends AppCompatActivity implements AdapterView
                             Log.d(TAG, "signInWithCredential:success");
                             progressDialog.dismiss();
                             FirebaseUser user = task.getResult().getUser();
-                            startActivity(new Intent(PhoneLoginActivity.this, MainActivity.class));
-                            // Update UI
+                            Log.d(TAG, user.getUid() + user.getPhoneNumber() + user.toString());
+                            String userID = user.getUid();
+                            Users users = new Users(userID,
+                                    "",
+                                    user.getPhoneNumber(),
+                                    "",
+                                    "", "", "", "", "", "");
+                            fireStore.collection("Users")
+                                    .document(userID)
+                                    .set(users)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Log.d(TAG, "add:user success");
+                                            startActivity(new Intent(PhoneLoginActivity.this, SetUserInfoActivity.class));
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d(TAG, "add:user fail" + e.getMessage());
+                                        }
+                                    });
                         } else {
                             // Sign in failed, display a message and update the UI
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

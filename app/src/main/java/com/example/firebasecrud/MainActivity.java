@@ -68,14 +68,26 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.rotate_fragment:
-                Toast.makeText(this, "rotate_fragment", Toast.LENGTH_SHORT).show();
+            case R.id.menu_search:
+                Toast.makeText(this, "menu_search", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.scale_fragment:
+            case R.id.action_new_group:
                 Toast.makeText(this, "scale_fragment", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.action_new_broadcast:
+                Toast.makeText(this, "action_new_broadcast", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_wa_web:
+                Toast.makeText(this, "action_wa_web", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_starred_message:
+                Toast.makeText(this, "action_starred_message", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_setting:
+                Toast.makeText(this, "action_setting", Toast.LENGTH_SHORT).show();
+                break;
             default:
-                Toast.makeText(this, "translate_fragment", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "other", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
