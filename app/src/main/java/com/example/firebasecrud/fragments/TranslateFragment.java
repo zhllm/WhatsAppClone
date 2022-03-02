@@ -20,12 +20,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TranslateFragment extends Fragment {
+    private View ln_invite;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_translate, container, false);
+
+
+        ln_invite = view.findViewById(R.id.ln_invite);
+        ln_invite.setVisibility(View.INVISIBLE);
+
         RecyclerView recyclerView = view.findViewById(R.id.recycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         List<CallList> lists = new ArrayList<>();

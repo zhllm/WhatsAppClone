@@ -20,6 +20,7 @@ public class RotateFragment extends Fragment {
 
     private List<ChatList> lists = new ArrayList<>();
     private RecyclerView recyclerView;
+    private View ln_invite;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,6 +30,8 @@ public class RotateFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         getLists();
+        ln_invite = view.findViewById(R.id.ln_invite);
+        ln_invite.setVisibility(View.INVISIBLE);
         return view;
     }
 

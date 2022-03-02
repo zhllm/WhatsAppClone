@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.firebasecrud" >
+    package="com.example.firebasecrud">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
@@ -11,7 +11,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FirebaseCRUD" >
+        android:theme="@style/Theme.FirebaseCRUD">
+        <activity
+            android:name=".view.profile.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.settings.SettingsActivity"
+            android:exported="true"
+            android:theme="@style/Theme.FirebaseCRUD.NoActionBar" />
         <activity
             android:name=".view.auth.SetUserInfoActivity"
             android:exported="true"
@@ -28,7 +35,7 @@
             android:name=".SplashScreenActivity"
             android:exported="true"
             android:label="@string/title_activity_splash_screen"
-            android:theme="@style/Theme.FirebaseCRUD.NoActionBar" >
+            android:theme="@style/Theme.FirebaseCRUD.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +45,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.FirebaseCRUD.NoActionBar" >
+            android:theme="@style/Theme.FirebaseCRUD.NoActionBar">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->

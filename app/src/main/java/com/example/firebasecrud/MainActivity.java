@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.example.firebasecrud.databinding.ActivityMainBinding;
 import com.example.firebasecrud.fragments.RotateFragment;
 import com.example.firebasecrud.fragments.ScaleFragment;
 import com.example.firebasecrud.fragments.TranslateFragment;
+import com.example.firebasecrud.view.settings.SettingsActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "action_starred_message", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_setting:
-                Toast.makeText(this, "action_setting", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 break;
             default:
                 Toast.makeText(this, "other", Toast.LENGTH_SHORT).show();

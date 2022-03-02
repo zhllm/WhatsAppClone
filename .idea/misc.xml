@@ -16,9 +16,12 @@
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/drawable/ic_search.xml" value="0.24791666666666667" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/layout/activity_phone_login.xml" value="0.25" />
+        <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/layout/activity_profile.xml" value="0.27395833333333336" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/layout/activity_set_user_info2.xml" value="0.25677083333333334" />
+        <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/layout/activity_settings.xml" value="0.290625" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/layout/activity_welcome_screen.xml" value="0.36614583333333334" />
+        <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/layout/fragment_first.xml" value="0.36594202898550726" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/layout/fragment_rotate.xml" value="0.25" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/layout/fragment_scale.xml" value="0.25" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/layout/fragment_test.xml" value="0.2046875" />
