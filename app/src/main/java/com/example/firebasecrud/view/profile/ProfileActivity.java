@@ -3,23 +3,34 @@ package com.example.firebasecrud.view.profile;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.databinding.DataBindingUtil;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.example.firebasecrud.R;
+import com.example.firebasecrud.common.Common;
 import com.example.firebasecrud.databinding.ActivityProfileBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
     ActivityProfileBinding binding;
     private FirebaseUser firebaseUser;
     private FirebaseFirestore fireStore;
-    private BottomSheetDialog dialog;
+    private BottomSheetDialog dialog, dialogEditUsername;
     private int IMAGE_GALLERY_REQUEST = 111;
     final static String TAG = "CommonLogTag";
     private Uri imageUri;
@@ -91,10 +102,73 @@ public class ProfileActivity extends AppCompatActivity {
                 showBottomSheetEditName();
             }
         });
+        binding.imageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.imageProfile.invalidate();
+                Drawable drawable = binding.imageProfile.getDrawable();
+                Common.IMAGE_BITMAP = ((GlideBitmapDrawable) drawable.getCurrent()).getBitmap();
+                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        ProfileActivity.this,
+                        binding.imageProfile,
+                        "image");
+            }
+        });
     }
 
     private void showBottomSheetEditName() {
+        @SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.button_sheet_edit, null);
+        dialogEditUsername = new BottomSheetDialog(this);
+        dialogEditUsername.setContentView(view);
+        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogEditUsername.dismiss();
+            }
+        });
 
+        EditText editText = view.findViewById(R.id.username);
+
+        view.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(editText.getText().toString())) {
+                    Toast t = Toast.makeText(ProfileActivity.this, "Name can't be empty", Toast.LENGTH_SHORT);
+                    t.setGravity(Gravity.TOP, 0, 0);
+                    t.show();
+                    return;
+                }
+                updateUsername(editText.getText().toString());
+                dialogEditUsername.dismiss();
+            }
+        });
+        dialogEditUsername.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                dialogEditUsername = null;
+            }
+        });
+        dialogEditUsername.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        dialogEditUsername.show();
+    }
+
+    private void updateUsername(String username) {
+        fireStore.collection("Users")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .update("userName", username)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "profile edit username error" + e.getMessage());
+                    }
+                })
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "profile edit username success");
+                        getInfo();
+                    }
+                });
     }
 
     private void showBottomSheetPickPhoto() {
@@ -160,9 +234,9 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Log.d(TAG, "getInfo:onSuccess:");
-                        String userName = documentSnapshot.get("userName").toString();
-                        String userPhone = documentSnapshot.get("userPhone").toString();
-                        String userProfile = documentSnapshot.get("userProfile").toString();
+                        String userName = documentSnapshot.getString("userName");
+                        String userPhone = documentSnapshot.getString("userPhone");
+                        String userProfile = documentSnapshot.getString("userProfile");
                         binding.tvUsername.setText(userName);
                         binding.tvPhone.setText(userPhone);
                         if (!userProfile.isEmpty()) {
@@ -214,8 +288,8 @@ public class ProfileActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Task<Uri>  uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                            while (!uriTask.isSuccessful());
+                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                            while (!uriTask.isSuccessful()) ;
                             Uri downloadUri = uriTask.getResult();
                             final String sDownloadUrl = String.valueOf(downloadUri);
 

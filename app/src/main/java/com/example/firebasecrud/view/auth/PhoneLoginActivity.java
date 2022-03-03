@@ -93,6 +93,7 @@ public class PhoneLoginActivity extends AppCompatActivity implements AdapterView
     }
 
     private void startPhoneNumberVerification(String phoneNumber) {
+        Log.d(TAG, "startPhoneNumberVerification: ");
         // [START start_phone_auth]
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)

@@ -5,7 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -17,9 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FirebaseCRUD">
         <activity
-            android:name=".view.profile.ProfileActivity"
+            android:name=".view.display.ViewImageActivity"
             android:theme="@style/Theme.FirebaseCRUD.NoActionBar"
             android:exported="false" />
+        <activity
+            android:name=".view.profile.ProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FirebaseCRUD.NoActionBar" />
         <activity
             android:name=".view.settings.SettingsActivity"
             android:exported="true"
