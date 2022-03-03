@@ -85,6 +85,16 @@ public class ProfileActivity extends AppCompatActivity {
                 showBottomSheetPickPhoto();
             }
         });
+        binding.edUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomSheetEditName();
+            }
+        });
+    }
+
+    private void showBottomSheetEditName() {
+
     }
 
     private void showBottomSheetPickPhoto() {
