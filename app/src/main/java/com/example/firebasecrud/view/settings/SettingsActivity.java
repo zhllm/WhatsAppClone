@@ -58,11 +58,13 @@ public class SettingsActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        String userName = Objects.requireNonNull(documentSnapshot.get("userName")).toString();
+                        String userName = documentSnapshot.getString("userName");
                         String userProfile = documentSnapshot.getString("userProfile");
-                        Glide.with(SettingsActivity.this)
-                                .load(Uri.parse(userProfile))
-                                .into(binding.userProfile);
+                        if (userProfile != null && !userProfile.isEmpty()) {
+                            Glide.with(SettingsActivity.this)
+                                    .load(Uri.parse(userProfile))
+                                    .into(binding.userProfile);
+                        }
                         binding.userName.setText(userName);
                         Log.d(TAG, TAG + " success: userName = " + userName);
                     }

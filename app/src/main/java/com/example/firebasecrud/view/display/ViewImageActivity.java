@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 
 import com.example.firebasecrud.R;
+import com.example.firebasecrud.common.Common;
 import com.example.firebasecrud.databinding.ActivityViewImageBinding;
 
 public class ViewImageActivity extends AppCompatActivity {
@@ -15,5 +16,6 @@ public class ViewImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_image);
+        binding.imageView.setImageBitmap(Common.IMAGE_BITMAP);
     }
 }

@@ -14,12 +14,14 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.firebasecrud.databinding.ActivityMainBinding;
 import com.example.firebasecrud.fragments.RotateFragment;
 import com.example.firebasecrud.fragments.ScaleFragment;
 import com.example.firebasecrud.fragments.TranslateFragment;
+import com.example.firebasecrud.view.contact.ContactActivity;
 import com.example.firebasecrud.view.settings.SettingsActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -103,6 +105,12 @@ public class MainActivity extends AppCompatActivity {
                 switch (index) {
                     case 0:
                         binding.floating.setImageDrawable(getDrawable(R.drawable.ic_baseline_call_24));
+                        binding.floating.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(MainActivity.this, ContactActivity.class));
+                            }
+                        });
                         break;
                     case 1:
                         binding.floating.setImageDrawable(getDrawable(R.drawable.ic_baseline_camera_alt_24));

@@ -33,7 +33,11 @@
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/menu/menu_main.xml" value="0.2046875" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2598958333333333" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2598958333333333" />
+        <entry key="app/src/main/res/drawable/bg_text_chat_left.xml" value="0.241" />
+        <entry key="app/src/main/res/drawable/bg_text_chat_right.xml" value="0.241" />
         <entry key="app/src/main/res/layout-v23/activity_view_image.xml" value="0.24365942028985507" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_contact.xml" value="0.24320652173913043" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24365942028985507" />
         <entry key="app/src/main/res/layout/activity_phone_login.xml" value="0.24365942028985507" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.24365942028985507" />
@@ -42,8 +46,13 @@
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2427536231884058" />
         <entry key="app/src/main/res/layout/activity_view_image.xml" value="0.2427536231884058" />
         <entry key="app/src/main/res/layout/activity_welcome_screen.xml" value="0.24365942028985507" />
+        <entry key="app/src/main/res/layout/bg_text_chat_left.xml" value="0.24320652173913043" />
         <entry key="app/src/main/res/layout/bottom_sheet_pick.xml" value="0.2427536231884058" />
         <entry key="app/src/main/res/layout/button_sheet_edit.xml" value="0.2427536231884058" />
+        <entry key="app/src/main/res/layout/chat_item_left.xml" value="0.24320652173913043" />
+        <entry key="app/src/main/res/layout/chat_item_right.xml" value="0.24320652173913043" />
+        <entry key="app/src/main/res/layout/fragment_rotate.xml" value="0.24320652173913043" />
+        <entry key="app/src/main/res/layout/layout_contact_item.xml" value="0.24320652173913043" />
       </map>
     </option>
   </component>

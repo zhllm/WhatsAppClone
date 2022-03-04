@@ -18,9 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FirebaseCRUD">
         <activity
-            android:name=".view.display.ViewImageActivity"
-            android:theme="@style/Theme.FirebaseCRUD.NoActionBar"
+            android:name=".view.chat.ChatActivity"
             android:exported="false" />
+        <activity
+            android:name=".view.contact.ContactActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FirebaseCRUD.NoActionBar" />
+        <activity
+            android:name=".view.display.ViewImageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FirebaseCRUD.NoActionBar" />
         <activity
             android:name=".view.profile.ProfileActivity"
             android:exported="false"
@@ -44,7 +51,6 @@
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
-            android:label="@string/title_activity_splash_screen"
             android:theme="@style/Theme.FirebaseCRUD.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

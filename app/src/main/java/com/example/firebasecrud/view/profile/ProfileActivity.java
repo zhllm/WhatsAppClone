@@ -8,6 +8,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
@@ -30,8 +31,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.example.firebasecrud.R;
+import com.example.firebasecrud.SplashScreenActivity;
 import com.example.firebasecrud.common.Common;
 import com.example.firebasecrud.databinding.ActivityProfileBinding;
+import com.example.firebasecrud.view.display.ViewImageActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -67,9 +70,11 @@ public class ProfileActivity extends AppCompatActivity {
             FirebaseFirestore.getInstance().collection("Users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    String imageProfile = Objects.requireNonNull(documentSnapshot.get("userProfile")).toString();
-                    if (!imageProfile.isEmpty()) {
-                        binding.imageProfile.setImageURI(Uri.parse(imageProfile));
+                    String imageProfile = documentSnapshot.getString("userProfile");
+                    if (imageProfile != null && !imageProfile.isEmpty()) {
+                        Glide.with(ProfileActivity.this)
+                                .load(Uri.parse(imageProfile))
+                                .into(binding.imageProfile);
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -102,18 +107,53 @@ public class ProfileActivity extends AppCompatActivity {
                 showBottomSheetEditName();
             }
         });
+        binding.btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogSignOut();
+            }
+        });
         binding.imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 binding.imageProfile.invalidate();
                 Drawable drawable = binding.imageProfile.getDrawable();
+                if (drawable == null) {
+                    return;
+                }
                 Common.IMAGE_BITMAP = ((GlideBitmapDrawable) drawable.getCurrent()).getBitmap();
                 ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         ProfileActivity.this,
                         binding.imageProfile,
                         "image");
+                Intent intent = new Intent(ProfileActivity.this, ViewImageActivity.class);
+                startActivity(intent, activityOptionsCompat.toBundle());
             }
         });
+    }
+
+    private void showDialogSignOut() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to sign out");
+        builder.setPositiveButton("Sign Out", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(ProfileActivity.this, SplashScreenActivity.class));
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
     }
 
     private void showBottomSheetEditName() {
@@ -239,7 +279,7 @@ public class ProfileActivity extends AppCompatActivity {
                         String userProfile = documentSnapshot.getString("userProfile");
                         binding.tvUsername.setText(userName);
                         binding.tvPhone.setText(userPhone);
-                        if (!userProfile.isEmpty()) {
+                        if (userProfile != null && !userProfile.isEmpty()) {
                             Glide.with(ProfileActivity.this)
                                     .load(userProfile)
                                     .into(binding.imageProfile);

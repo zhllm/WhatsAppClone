@@ -31,6 +31,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -39,6 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -64,8 +66,6 @@ public class PhoneLoginActivity extends AppCompatActivity implements AdapterView
         ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, countries);
         binding.spinnerCountry.setAdapter(aa);
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("hello");
-
 
         binding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,8 +141,6 @@ public class PhoneLoginActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
                             progressDialog.dismiss();
                             FirebaseUser user = task.getResult().getUser();
                             Log.d(TAG, user.getUid() + user.getPhoneNumber() + user.toString());
@@ -152,20 +150,28 @@ public class PhoneLoginActivity extends AppCompatActivity implements AdapterView
                                     user.getPhoneNumber(),
                                     "",
                                     "", "", "", "", "", "");
+
+                            Log.d(TAG, "signInWithCredential:success: " + userID);
                             fireStore.collection("Users")
                                     .document(userID)
-                                    .set(users)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
-                                        public void onSuccess(Void unused) {
-                                            Log.d(TAG, "add:user success");
-                                            startActivity(new Intent(PhoneLoginActivity.this, SetUserInfoActivity.class));
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            Log.d(TAG, "get success:  " + documentSnapshot.getString("userID"));
+                                            String id = documentSnapshot.getString("userID");
+                                            if (id == null || id.isEmpty()) {
+                                                createUserToFireStore(userID, users);
+                                            } else {
+                                                startActivity(new Intent(PhoneLoginActivity.this, SetUserInfoActivity.class));
+                                            }
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Log.d(TAG, "add:user fail" + e.getMessage());
+                                            Log.d(TAG, "get error:  " + e.getMessage());
+//                                            createUserToFireStore(userID, users);
                                         }
                                     });
                         } else {
@@ -175,6 +181,25 @@ public class PhoneLoginActivity extends AppCompatActivity implements AdapterView
                                 // The verification code entered was invalid
                             }
                         }
+                    }
+                });
+    }
+
+    private void createUserToFireStore(String userID, Users users) {
+        fireStore.collection("Users")
+                .document(userID)
+                .set(users)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "add:user success");
+                        startActivity(new Intent(PhoneLoginActivity.this, SetUserInfoActivity.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "add:user fail" + e.getMessage());
                     }
                 });
     }

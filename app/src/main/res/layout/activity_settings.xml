@@ -21,8 +21,8 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:title="Settings"
-                android:titleTextColor="@android:color/white" />
+                app:title="Settings"
+                app:titleTextColor="@android:color/white" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
