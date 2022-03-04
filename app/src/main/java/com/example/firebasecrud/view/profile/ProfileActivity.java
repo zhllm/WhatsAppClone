@@ -56,6 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
     private BottomSheetDialog dialog, dialogEditUsername;
     private int IMAGE_GALLERY_REQUEST = 111;
     final static String TAG = "CommonLogTag";
+
     private Uri imageUri;
 
 
