@@ -97,7 +97,7 @@ public class ChatActivity extends AppCompatActivity {
 
         initBtnClick();
         list = new ArrayList<>();
-        LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, true);
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         manager.setStackFromEnd(true);
         binding.recycleView.setLayoutManager(manager);
         readChats();
@@ -114,8 +114,9 @@ public class ChatActivity extends AppCompatActivity {
                             for (DataSnapshot sp : snapshot.getChildren()) {
                                 Chats chats = sp.getValue(Chats.class);
                                 if (chats != null
-                                        && chats.getSender().equals(firebaseUser.getUid())
-                                        && chats.getReceiver().equals(receiveID)
+                                        && (
+                                        chats.getSender().equals(firebaseUser.getUid()) && chats.getReceiver().equals(receiveID)
+                                                || chats.getReceiver().equals(firebaseUser.getUid()) && chats.getSender().equals(receiveID))
                                 ) {
                                     // chat 过滤
                                     list.add(chats);

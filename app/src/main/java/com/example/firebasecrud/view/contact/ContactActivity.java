@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.firebasecrud.R;
 import com.example.firebasecrud.adapter.ContactAdapter;
@@ -28,7 +29,7 @@ import java.util.List;
 public class ContactActivity extends AppCompatActivity {
 
     private ActivityContactBinding binding;
-    private List<Users> list = new ArrayList<>();
+    private final List<Users> list = new ArrayList<>();
     private ContactAdapter adapter;
     private FirebaseUser firebaseUser;
     private FirebaseFirestore firebaseFirestore;
@@ -41,6 +42,13 @@ public class ContactActivity extends AppCompatActivity {
         binding.contactRecycle.setLayoutManager(new LinearLayoutManager(this));
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         if (firebaseUser != null) {
             getContactList();
         }

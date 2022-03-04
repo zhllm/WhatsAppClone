@@ -1,6 +1,7 @@
 package com.example.firebasecrud.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,13 +36,15 @@ import java.util.Objects;
 
 public class RotateFragment extends Fragment {
 
-    private List<ChatList> lists = new ArrayList<>();
-    private List<String> allUserIds = new ArrayList<>();
+    private final List<ChatList> lists = new ArrayList<>();
+    private final List<String> allUserIds = new ArrayList<>();
     private FragmentRotateBinding binding;
     private FirebaseUser firebaseUser;
     private DatabaseReference reference;
     private static final String TAG = "RotateFragmentLog";
     private FirebaseFirestore firebaseFirestore;
+    private final Handler handler = new Handler();
+    private ChatListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +55,8 @@ public class RotateFragment extends Fragment {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        adapter = new ChatListAdapter(lists, getContext());
+        binding.recycleView.setAdapter(adapter);
         Log.d(TAG, "onCreateView: ");
         getLists();
 
@@ -65,13 +70,14 @@ public class RotateFragment extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        lists.clear();
+                        allUserIds.clear();
                         binding.progressBar.setVisibility(View.GONE);
                         for (DataSnapshot sp : snapshot.getChildren()) {
                             String userID = Objects.requireNonNull(sp.child("chatid").getValue()).toString();
-                            Log.d(TAG, "onDataChange: userID: " + userID);
-                            getUserData(userID);
+                            allUserIds.add(userID);
                         }
-                        binding.recycleView.setAdapter(new ChatListAdapter(lists, getContext()));
+                        getUserInfo();
                     }
 
                     @Override
@@ -81,26 +87,46 @@ public class RotateFragment extends Fragment {
                 });
     }
 
-    void getUserData(String userID) {
-        firebaseFirestore.collection("Users").document(userID).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        ChatList chatList = new ChatList(
-                                documentSnapshot.getString("userID"),
-                                documentSnapshot.getString("userName"),
-                                "this is a description...",
-                                "",
-                                documentSnapshot.getString("userProfile")
-                        );
-                        lists.add(chatList);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: " + e.getMessage());
-                    }
-                });
+
+    void getUserInfo() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                for (String userID : allUserIds) {
+                    firebaseFirestore.collection("Users")
+                            .document(userID)
+                            .get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    try {
+                                        ChatList chatList = new ChatList(
+                                                documentSnapshot.getString("userID"),
+                                                documentSnapshot.getString("userName"),
+                                                "this is a description...",
+                                                "",
+                                                documentSnapshot.getString("userProfile")
+                                        );
+                                        lists.add(chatList);
+                                    } catch (Exception e) {
+                                        Log.d(TAG, "onSuccess: parse json error: " + e.getMessage());
+                                    }
+                                    if (adapter != null) {
+                                        adapter.notifyItemChanged(0);
+                                        adapter.notifyDataSetChanged();
+                                        Log.d(TAG, "onSuccess: adapter count" + adapter.getItemCount());
+                                    }
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
+                }
+            }
+        });
+
     }
 }

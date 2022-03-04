@@ -1,6 +1,7 @@
 package com.example.firebasecrud.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.firebasecrud.R;
 import com.example.firebasecrud.model.ChatList;
+import com.example.firebasecrud.view.chat.ChatActivity;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
@@ -43,6 +45,18 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatHo
         Glide.with(context)
                 .load(chat.getUrlProfile())
                 .into(holder.profile);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(
+                        new Intent(context, ChatActivity.class)
+                                .putExtra("userID", chat.getUserID())
+                                .putExtra("userName", chat.getUserName())
+                                .putExtra("userProfile", chat.getUrlProfile())
+                );
+            }
+        });
     }
 
     @Override

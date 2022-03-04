@@ -11,15 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firebasecrud.R;
 import com.example.firebasecrud.model.chat.Chats;
-import com.example.firebasecrud.model.user.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
-    private List<Chats> list;
-    private Context context;
+    private final List<Chats> list;
+    private final Context context;
     public static final int MSG_TYPE_LEFT = 0;
     public static final int MSG_TYPE_Right = 0;
     FirebaseUser firebaseUser;

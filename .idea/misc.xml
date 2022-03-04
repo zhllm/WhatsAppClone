@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.24010416666666667" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2598958333333333" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/drawable/ic_baseline_call_24.xml" value="0.22083333333333333" />
         <entry key="..\:/code/android/FirebaseCRUD/app/src/main/res/drawable/ic_baseline_camera_alt_24.xml" value="0.22083333333333333" />
