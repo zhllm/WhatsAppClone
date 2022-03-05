@@ -1,4 +1,4 @@
-package com.example.firebasecrud.view.contact;
+package com.example.firebasecrud.view.activities.contact;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +13,6 @@ import com.example.firebasecrud.R;
 import com.example.firebasecrud.adapter.ContactAdapter;
 import com.example.firebasecrud.databinding.ActivityContactBinding;
 import com.example.firebasecrud.model.user.Users;
-import com.example.firebasecrud.view.settings.SettingsActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +21,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.nio.file.FileStore;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.firebasecrud.view.chat;
+package com.example.firebasecrud.view.activities.chat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

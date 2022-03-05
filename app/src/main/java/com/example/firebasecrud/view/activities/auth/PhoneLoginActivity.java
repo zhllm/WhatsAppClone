@@ -1,7 +1,6 @@
-package com.example.firebasecrud.view.auth;
+package com.example.firebasecrud.view.activities.auth;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -14,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.example.firebasecrud.MainActivity;
 import com.example.firebasecrud.R;
 import com.example.firebasecrud.databinding.ActivityPhoneLoginBinding;
 import com.example.firebasecrud.model.user.Users;
@@ -30,18 +28,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class PhoneLoginActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {

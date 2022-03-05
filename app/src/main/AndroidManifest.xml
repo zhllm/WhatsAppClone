@@ -18,30 +18,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FirebaseCRUD">
         <activity
-            android:name=".view.chat.ChatActivity"
+            android:name=".view.activities.profile.UserProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".view.contact.ContactActivity"
+            android:name=".view.activities.chat.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activities.contact.ContactActivity"
             android:exported="false"
             android:theme="@style/Theme.FirebaseCRUD.NoActionBar" />
         <activity
-            android:name=".view.display.ViewImageActivity"
+            android:name=".view.activities.display.ViewImageActivity"
             android:exported="false"
             android:theme="@style/Theme.FirebaseCRUD.NoActionBar" />
         <activity
-            android:name=".view.profile.ProfileActivity"
+            android:name=".view.activities.profile.ProfileActivity"
             android:exported="false"
             android:theme="@style/Theme.FirebaseCRUD.NoActionBar" />
         <activity
-            android:name=".view.settings.SettingsActivity"
+            android:name=".view.activities.settings.SettingsActivity"
             android:exported="true"
             android:theme="@style/Theme.FirebaseCRUD.NoActionBar" />
         <activity
-            android:name=".view.auth.SetUserInfoActivity"
+            android:name=".view.activities.auth.SetUserInfoActivity"
             android:exported="true"
             android:theme="@style/Theme.FirebaseCRUD.NoActionBar" />
         <activity
-            android:name=".view.auth.PhoneLoginActivity"
+            android:name=".view.activities.auth.PhoneLoginActivity"
             android:exported="true"
             android:theme="@style/Theme.FirebaseCRUD.NoActionBar" />
         <activity

@@ -1,4 +1,4 @@
-package com.example.firebasecrud.view.auth;
+package com.example.firebasecrud.view.activities.auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
