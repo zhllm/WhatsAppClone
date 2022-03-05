@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.firebasecrud.R;
@@ -35,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -47,6 +45,7 @@ public class ChatActivity extends AppCompatActivity {
     private ChatAdapter chatAdapter;
     private List<Chats> list;
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +61,15 @@ public class ChatActivity extends AppCompatActivity {
         receiveID = intent.getStringExtra("userID");
         if (receiveID != null) {
             binding.tvUsername.setText(username);
-            Glide.with(this)
-                    .load(profile)
-                    .into(binding.imageProfile);
+            if (profile != null) {
+                if (profile.equals("")) {
+                    binding.imageProfile.setImageDrawable(getDrawable(R.drawable.mlale_plc));
+                } else {
+                    Glide.with(this)
+                            .load(profile)
+                            .into(binding.imageProfile);
+                }
+            }
         }
 
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
