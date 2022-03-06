@@ -10,7 +10,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        app:background="@android:color/white"
         android:fitsSystemWindows="true"
         tools:context=".view.activities.profile.UserProfileActivity">
 
@@ -19,14 +19,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
+            android:background="@color/white"
             android:theme="@style/ThemeOverlay.AppCompat.Light">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:fitsSystemWindows="true"
+                android:background="@color/white"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:contentScrim="?android:attr/colorControlHighlight">
+                app:contentScrim="@color/colorPrimary">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -37,7 +39,9 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_gravity="bottom" />
+                    android:layout_gravity="bottom"
+                    android:background="@color/white"
+                    android:alpha="0.2"/>
 
                 <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
