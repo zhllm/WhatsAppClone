@@ -1,4 +1,4 @@
-package com.example.firebasecrud.view.chat;
+package com.example.firebasecrud.view.activities.chat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +19,7 @@ import com.example.firebasecrud.R;
 import com.example.firebasecrud.adapter.ChatAdapter;
 import com.example.firebasecrud.databinding.ActivityChatBinding;
 import com.example.firebasecrud.model.chat.Chats;
+import com.example.firebasecrud.view.activities.profile.UserProfileActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,13 +72,6 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         }
-
-        binding.btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         binding.edMessage.addTextChangedListener(new TextWatcher() {
             @Override
@@ -153,6 +147,20 @@ public class ChatActivity extends AppCompatActivity {
                     sendTextMessage(binding.edMessage.getText().toString());
                     binding.edMessage.setText("");
                 }
+            }
+        });
+
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        binding.imageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChatActivity.this, UserProfileActivity.class));
             }
         });
     }

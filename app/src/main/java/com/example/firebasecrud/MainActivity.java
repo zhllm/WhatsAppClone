@@ -21,8 +21,8 @@ import com.example.firebasecrud.databinding.ActivityMainBinding;
 import com.example.firebasecrud.fragments.RotateFragment;
 import com.example.firebasecrud.fragments.ScaleFragment;
 import com.example.firebasecrud.fragments.TranslateFragment;
-import com.example.firebasecrud.view.contact.ContactActivity;
-import com.example.firebasecrud.view.settings.SettingsActivity;
+import com.example.firebasecrud.view.activities.contact.ContactActivity;
+import com.example.firebasecrud.view.activities.settings.SettingsActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
