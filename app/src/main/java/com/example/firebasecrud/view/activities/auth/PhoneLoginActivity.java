@@ -74,7 +74,7 @@ public class PhoneLoginActivity extends AppCompatActivity implements AdapterView
                 }
                 progressDialog.setMessage("Please wait");
                 progressDialog.show();
-                startPhoneNumberVerification("+8617781392267"); // 8618380481994
+                startPhoneNumberVerification("+8618380481994"); // 8618380481994
                 // startPhoneNumberVerification("+" + binding.edCode.getText().toString() + binding.edPhone.getText().toString()); // binding.edPhone.getText().toString()
             }
         });
